@@ -76,6 +76,7 @@ class Property6 {
 
 /// property with back field may have get only and set only
 /// property with back field may not have initializers
+/// back field can be initialized
 class Property7 {
     // set only
     private int x_;
@@ -83,9 +84,9 @@ class Property7 {
         set {
             x_ = value;
         }
-    };
+    }
     // get only
-    private int y_;
+    private int y_ = 10;
     public int y {
         get {
             return y_;
@@ -97,24 +98,19 @@ class Test {
     public static void Main(string[] args) {
         var p1 = new Property1();
         Console.WriteLine($"{p1.x}");
-        Debug.WriteLine($"{p1.x}");
 
         var p2 = new Property2();
         Console.WriteLine($"{p2.x}");
-        Debug.WriteLine($"{p2.x}");
 
         var p3 = new Property3();
         Console.WriteLine($"{p3.x}");
-        Debug.WriteLine($"{p3.x}");
 
         var p4 = new Property4();
         Console.WriteLine($"{p4.x}");
-        Debug.WriteLine($"{p4.x}");
 
         var p5 = new Property5();
         // p5.x = 11;
         Console.WriteLine($"{p5.x}");
-        Debug.WriteLine($"{p5.x}");
     }
 }
 
