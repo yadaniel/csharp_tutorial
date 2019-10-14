@@ -1,10 +1,4 @@
-#define DEBUG
-
-// [System.Diagnostics.Conditional("DEBUG")]
-// public static void WriteLine (object value);
-
 using System;
-using System.Diagnostics;
 
 /// style
 class Property1 {
@@ -33,7 +27,7 @@ class Property2 {
     }
 }
 
-/// auto implemented
+/// auto implemented, initialized in constructor
 class Property3 {
     public int x {
         get;
@@ -44,33 +38,57 @@ class Property3 {
     }
 }
 
-/// auto implemented, initialized
+/// auto implemented property with and without initializer
 /// only auto implemented properties can have initializers
 class Property4 {
     public int x {
         get;
         set;
     } = 10;
+    public int y {
+        get;
+        set;
+    }
 }
 
+/// auto property with get, private set
 class Property5 {
     public int x {
         get;
         private set;
     } = 10;
+    public int y {
+        get;
+        private set;
+    }
 }
 
+/// auto property with get only
+/// note: auto property with set only not possible
 class Property6 {
     public int x {
         get;
     } = 10;
+    public int y {
+        get;
+    }
 }
 
+/// property with back field may have get only and set only
+/// property with back field may not have initializers
 class Property7 {
+    // set only
     private int x_;
     public int x {
         set {
             x_ = value;
+        }
+    };
+    // get only
+    private int y_;
+    public int y {
+        get {
+            return y_;
         }
     }
 }
