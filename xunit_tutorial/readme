@@ -1,0 +1,15 @@
+# project structure
+mkdir xunit_tutorial && cd xunit_tutorial
+dotnet new sln
+dotnet new console --name tut1
+
+# add and list packages
+dotnet nuget locals all --clear
+dotnet add package xunit
+dotnet add package nunit
+dotnet add package Microsoft.NET.Test.Sdk
+dotnet add package xunit.runner.console
+dotnet add package xunit.runner.visualstudio
+dotnet add package coverlet.collector
+dotnet list package 
+
