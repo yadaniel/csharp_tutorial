@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Dynamic;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
+using System.Xml.Schema;
 using static System.Console;
 
 enum State { S0, S1, S2, S3, S4 }
@@ -38,13 +42,36 @@ class DataC(int a, int b) {
     }
 }
 
+class DataC2 {
+    public DataC2(int X, int Y) {
+        this.X = X;
+        this.Y = Y;
+    }
+
+    static DataC2() {
+        XS = 1;
+        YS = 2;
+    }
+
+    public void Deconstruct(out int xsum, out int ysum) {
+        xsum = X + XS;
+        ysum = Y + YS;
+    }
+
+    public static int XS;
+    public static int YS;
+    public int X;
+    public int Y;
+}
+
 class App {
     public static void Main() {
         WriteLine("main");
-        test1_run();
-        test2_run();
-        test3_run();
-        test4_run();
+        //test1_run();
+        //test2_run();
+        //test3_run();
+        //test4_run();
+        test5_run();
     }
 
     static State state = State.S0;
@@ -231,6 +258,46 @@ class App {
         test4(new DataC(99,100));
         test4(new DataC(99,99));
         test4(null);
+    }
+
+    public static void test5(DataC2 dataC2) {
+        WriteLine($"test5, given {dataC2}");
+
+        /*
+        var x = DataC2 switch {     // DataC2 is a type and not possible in this context
+            {XS:0, YS:0} => 0,
+            {XS:1, YS:1} => 1,
+            _ => -1
+        };
+        WriteLine($"x = {x}");  
+        */
+
+        // deconstruction context within (), flexible access, var outside and inside
+        // property context within {}, no access to static properties, no var outside
+        var x = dataC2 switch {
+            {X:0, Y:0} => 0,
+            {X:1, Y:1} => 1,
+            {X: var x_, Y: var y_} when x_ > 0 && y_ > 0 => 2,
+            {X: >100, Y: var y_} when y_ > 100 => 3,
+            var (xsum, ysum) when xsum > 100 && ysum > 100 => 4,
+            var (xsum, _) when xsum > 1000 => 5,
+            var (_, ysum) when ysum > 1000 => 6,
+            null => -1,
+            _ => -1,
+        };
+        WriteLine($"x = {x}");
+    }
+
+    public static void test5_run() {
+        test5(new DataC2(0,0));
+        test5(new DataC2(1,1));
+        test5(new DataC2(1,2));
+        test5(new DataC2(2,1));
+        test5(new DataC2(11,10));
+        test5(new DataC2(11,11));
+        test5(new DataC2(99,100));
+        test5(new DataC2(99,99));
+        test5(null);
     }
 
 }
