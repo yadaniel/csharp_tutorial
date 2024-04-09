@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-
-using static System.Math;
 using static System.Console;
+using static System.Math;
 
 // dotnet clean
 // dotnet build /p:StartupObject=App1
@@ -25,9 +24,10 @@ public class App1 {
         };
 
         int cnt2;
-        if(count is null) {
+        if (count is null) {
             cnt2 = 0;
-        } else {
+        }
+        else {
             cnt2 = (int)count;
             // cnt2 = count;
         }
@@ -35,11 +35,12 @@ public class App1 {
         var o = 1;
         if (o is int i) {
             WriteLine($"{i}");
-        } else {
+        }
+        else {
             WriteLine("not int");
         }
 
-        switch(o) {
+        switch (o) {
             case int x:
                 break;
             default:
@@ -47,7 +48,7 @@ public class App1 {
         }
 
         int cnt3;
-        switch(count) {
+        switch (count) {
             case null:
                 cnt3 = 0;
                 break;
@@ -76,7 +77,7 @@ public class App1 {
         };
 
         var p1 = 100.0 switch {
-            >100.0 or <0.0 => Double.NaN,
+            > 100.0 or < 0.0 => Double.NaN,
             var p => p,
         };
         WriteLine($"{p1}");
@@ -90,5 +91,3 @@ public class App2 {
         Console.WriteLine("in main2");
     }
 }
-
-
